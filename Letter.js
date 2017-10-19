@@ -8,7 +8,7 @@ var Letter = function(character) {
 		// if it isnt a space, set the initial state to a "_", the answer to the actual letter, and isGuessed to false because they havent guessed it yet
 
 		this.char = "_";
-		this.secret = character;
+		this.secret = character.toLowerCase();
 		this.isGuessed = false;
 	}
 

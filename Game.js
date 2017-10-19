@@ -22,20 +22,18 @@ var Game = function () {
 				var wordPrint = "";
 					for (var i = 0; i < array.length; i++) {
 						wordPrint += " " + array[i].char
-
 					}
 					if(correct === true){
 						console.log("Correct!")
 					} else {
 						console.log("False!")
-						console.log(this.guessesLeft-- + " guesses left!")
-						if (this.guessesLeft < 0) {
-							console.log("You Lose!");
-							self.newGameLogic();
-						}
+						console.log(self.guessesLeft-- + " guesses left!")
 					}
 					console.log(wordPrint)
-					if(word.checkWinner()){
+					if (self.guessesLeft <= 0) {
+						console.log("You Lose!");
+						self.newGameLogic();
+					} else if(word.checkWinner()){
 						self.gameLogic(word);
 					} else {
 						console.log("You Win!");
@@ -46,6 +44,7 @@ var Game = function () {
 	};
 
 	this.newGameLogic = function () {
+		this.guessesLeft = 10;
 		inquirer
 		.prompt([
 			{
@@ -57,7 +56,7 @@ var Game = function () {
 			])
 		.then(function(inquirerResponse){
 			if (inquirerResponse.replay === "Yes") {
-				this.guessesLeft = 10;
+				
 				var word = new Word();
 
 				word.getWord(function(array){
