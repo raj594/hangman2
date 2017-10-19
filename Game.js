@@ -1,13 +1,13 @@
 var inquirer = require('inquirer')
 var Word = require('./Word')
 
-
-
 var Game = function () {
+
+	var self = this;
 
 	this.guessesLeft = null;
 
-	this.gameLogic = function (game, word) {
+	this.gameLogic = function (word) {
 
 		inquirer
 			.prompt([
@@ -29,24 +29,23 @@ var Game = function () {
 					} else {
 						console.log("False!")
 						console.log(this.guessesLeft-- + " guesses left!")
-						console.log("You Lose!");
 						if (this.guessesLeft < 0) {
-							game.newGameLogic(game);
+							console.log("You Lose!");
+							self.newGameLogic();
 						}
 					}
 					console.log(wordPrint)
 					if(word.checkWinner()){
-						game.gameLogic(game, word);
+						self.gameLogic(word);
 					} else {
 						console.log("You Win!");
-						game.newGameLogic(game);
+						self.newGameLogic();
 					}
 				});
 			});
 	};
 
-	this.newGameLogic = function (game) {
-		guessesLeft = 10;
+	this.newGameLogic = function () {
 		inquirer
 		.prompt([
 			{
@@ -69,7 +68,7 @@ var Game = function () {
 
 					}
 					console.log(wordPrint)
-					game.gameLogic(game, word);
+					self.gameLogic(word);
 				});
 
 
@@ -78,10 +77,11 @@ var Game = function () {
 				console.log("Later")
 			}
 		});
-	}
+	};
 };
 
-var game = new Game();
 
-game.newGameLogic(game);
+
+var game = new Game();
+game.newGameLogic();
 
